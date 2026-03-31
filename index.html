@@ -1,1 +1,763 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manchester United | Glory Glory Man United</title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif']
+                    },
+                    colors: {
+                        mured: '#DA291C',
+                        mugold: '#FBE122',
+                        mudark: '#090909',
+                        mugray: '#151515',
+                        muink: '#0f0f10'
+                    },
+                    boxShadow: {
+                        neonRed: '0 0 30px rgba(218,41,28,0.35)',
+                        neonGold: '0 0 30px rgba(251,225,34,0.25)',
+                        softCard: '0 20px 60px rgba(0,0,0,0.45)'
+                    },
+                    animation: {
+                        floaty: 'floaty 5s ease-in-out infinite',
+                        pulseSlow: 'pulseSlow 4s ease-in-out infinite',
+                        shine: 'shine 7s linear infinite',
+                        zoomBg: 'zoomBg 20s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        floaty: {
+                            '0%,100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        pulseSlow: {
+                            '0%,100%': { opacity: '.55' },
+                            '50%': { opacity: '1' }
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-120%) skewX(-18deg)' },
+                            '100%': { transform: 'translateX(250%) skewX(-18deg)' }
+                        },
+                        zoomBg: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.12)' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --red: #DA291C;
+            --gold: #FBE122;
+            --dark: #090909;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(218,41,28,0.10), transparent 30%),
+                radial-gradient(circle at 85% 10%, rgba(251,225,34,0.07), transparent 20%),
+                linear-gradient(180deg, #070707 0%, #0b0b0c 55%, #050505 100%);
+            color: #fff;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0c0c0c; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #DA291C, #8d1a12);
+            border-radius: 999px;
+        }
+
+        .glass-nav {
+            background: rgba(10,10,10,0.72);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .glass-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(218,41,28,0.45);
+            box-shadow: 0 24px 70px rgba(218,41,28,0.18);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 24px rgba(218,41,28,0.45);
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 20px rgba(251,225,34,0.35);
+        }
+
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.05);
+            transition: opacity 1.3s ease, transform 8s ease;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1.12);
+        }
+
+        .hero-overlay {
+            background:
+                linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.72) 58%, rgba(0,0,0,0.95)),
+                radial-gradient(circle at center, rgba(218,41,28,0.18), transparent 38%);
+        }
+
+        .grid-lines {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(180deg, rgba(255,255,255,0.9), transparent 90%);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 88px;
+            height: 4px;
+            margin: 16px auto 0;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(218,41,28,0.2), #DA291C, rgba(251,225,34,0.95));
+            box-shadow: 0 0 20px rgba(218,41,28,0.5);
+        }
+
+        .timeline-line {
+            background: linear-gradient(180deg, rgba(218,41,28,0.15), rgba(218,41,28,0.9), rgba(251,225,34,0.45));
+        }
+
+        .timeline-dot {
+            box-shadow: 0 0 0 8px rgba(218,41,28,0.10), 0 0 26px rgba(218,41,28,0.35);
+        }
+
+        .stat-shine {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-shine::before {
+            content: '';
+            position: absolute;
+            inset: -20%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+            transform: translateX(-120%) skewX(-18deg);
+            animation: shine 7s linear infinite;
+            pointer-events: none;
+        }
+
+        .gallery-item img,
+        .legend-card img {
+            transition: transform .7s ease, filter .7s ease, opacity .7s ease;
+        }
+
+        .gallery-item:hover img,
+        .legend-card:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0);
+        }
+
+        .legend-card img {
+            filter: grayscale(1);
+        }
+
+        .badge-chip {
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+        }
+
+        .ring-orb {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        .lightbox {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease;
+        }
+
+        .lightbox.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease;
+        }
+
+        .mobile-menu.open {
+            max-height: 320px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-mured selection:text-white">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="ring-orb w-64 h-64 bg-mured/20 top-8 -left-10 animate-floaty"></div>
+        <div class="ring-orb w-72 h-72 bg-mugold/10 top-40 right-0 animate-pulseSlow"></div>
+        <div class="ring-orb w-80 h-80 bg-mured/10 bottom-0 left-1/3 animate-floaty" style="animation-delay:1.2s"></div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-epic-battle-trailer-2338.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button id="musicBtn" class="fixed bottom-6 right-6 z-[60] w-14 h-14 rounded-full bg-mured text-white flex items-center justify-center shadow-neonRed hover:scale-110 transition duration-300" title="Bật/Tắt nhạc nền">
+        <i class="fa-solid fa-music text-xl"></i>
+    </button>
+
+    <nav id="navbar" class="fixed top-0 inset-x-0 z-50 glass-nav transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-4">
+                <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-full p-1 bg-white/5 border border-white/10 shadow-neonGold">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="text-left hidden sm:block">
+                        <div class="font-oswald text-2xl tracking-widest uppercase">Manchester United</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-[0.35em]">The Red Devils</div>
+                    </div>
+                </button>
+
+                <div class="hidden md:flex items-center gap-7 font-oswald uppercase tracking-wider text-[17px]">
+                    <a href="#history" class="hover:text-mured transition">Lịch sử</a>
+                    <a href="#trophies" class="hover:text-mured transition">Danh hiệu</a>
+                    <a href="#gallery" class="hover:text-mured transition">Thư viện</a>
+                    <a href="#videos" class="hover:text-mured transition">Khoảnh khắc</a>
+                    <a href="#legends" class="hover:text-mured transition">Huyền thoại</a>
+                </div>
+
+                <button id="menuBtn" class="md:hidden w-11 h-11 rounded-xl border border-white/10 bg-white/5 text-white text-lg">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobileMenu" class="mobile-menu md:hidden">
+                <div class="pt-4 pb-2 flex flex-col gap-3 font-oswald uppercase tracking-wider text-lg">
+                    <a href="#history" class="px-2 py-2 hover:text-mured">Lịch sử</a>
+                    <a href="#trophies" class="px-2 py-2 hover:text-mured">Danh hiệu</a>
+                    <a href="#gallery" class="px-2 py-2 hover:text-mured">Thư viện</a>
+                    <a href="#videos" class="px-2 py-2 hover:text-mured">Khoảnh khắc</a>
+                    <a href="#legends" class="px-2 py-2 hover:text-mured">Huyền thoại</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative min-h-screen flex items-center overflow-hidden pt-24">
+        <div class="absolute inset-0">
+            <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=1800&q=80');"></div>
+            <div class="hero-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/1/1a/Old_Trafford_inside_20060726_1.jpg');"></div>
+            <div class="hero-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/5/53/Old_Trafford_inside_1992.jpg');"></div>
+            <div class="absolute inset-0 hero-overlay"></div>
+            <div class="absolute inset-0 grid-lines opacity-20"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-3 badge-chip rounded-full px-4 py-2 text-sm mb-6 reveal active">
+                        <span class="w-2.5 h-2.5 rounded-full bg-mured shadow-neonRed"></span>
+                        <span class="uppercase tracking-[0.35em] text-gray-200">Glory Glory Man United</span>
+                    </div>
+
+                    <h1 class="font-oswald text-6xl sm:text-7xl lg:text-8xl leading-none uppercase mb-6 reveal active text-glow">
+                        Siêu phẩm <span class="text-mured">Quỷ Đỏ</span><br />
+                        giao diện <span class="text-white">đẳng cấp</span>
+                    </h1>
+
+                    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mb-8 reveal active">
+                        Bản dựng mới theo phong cách premium: hình ảnh chất hơn, hero đậm khí chất Old Trafford, thẻ nội dung sáng bóng, hiệu ứng cuộn mượt và cảm giác như bước vào đường hầm trước giờ bóng lăn.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 reveal active">
+                        <a href="#gallery" class="px-8 py-4 bg-mured hover:bg-red-700 text-white font-oswald uppercase tracking-[0.18em] rounded-xl shadow-neonRed transition hover:-translate-y-1">
+                            Xem thư viện
+                        </a>
+                        <a href="#legends" class="px-8 py-4 bg-white/5 border border-white/10 hover:border-mugold/50 text-white font-oswald uppercase tracking-[0.18em] rounded-xl transition hover:-translate-y-1">
+                            Huyền thoại CLB
+                        </a>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4 mt-10 max-w-3xl reveal active">
+                        <div class="glass-card stat-shine rounded-2xl p-5">
+                            <div class="text-3xl font-oswald text-mured">20</div>
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.25em]">Premier League</div>
+                        </div>
+                        <div class="glass-card stat-shine rounded-2xl p-5">
+                            <div class="text-3xl font-oswald text-mugold gold-glow">3</div>
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.25em]">Champions League</div>
+                        </div>
+                        <div class="glass-card stat-shine rounded-2xl p-5">
+                            <div class="text-3xl font-oswald text-white">1878</div>
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.25em]">Khởi nguồn</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal active">
+                    <div class="glass-card rounded-[28px] p-5 lg:p-6 relative overflow-hidden border border-white/10">
+                        <div class="absolute -top-10 -right-8 w-36 h-36 rounded-full bg-mured/20 blur-3xl"></div>
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-mugold/10 blur-3xl"></div>
+
+                        <div class="relative rounded-[22px] overflow-hidden aspect-[4/5] border border-white/10">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United Crest" class="absolute z-10 w-28 top-5 left-5 drop-shadow-[0_0_18px_rgba(251,225,34,0.35)] animate-floaty" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Sir_Alex_Ferguson_2011.jpg" alt="Sir Alex Ferguson" class="w-full h-full object-cover object-top" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-7">
+                                <div class="text-xs uppercase tracking-[0.35em] text-mugold mb-2">Biểu tượng chiến thắng</div>
+                                <div class="font-oswald text-4xl md:text-5xl uppercase text-glow leading-none">Sir Alex<br/>Ferguson</div>
+                                <p class="text-gray-300 mt-3 text-sm md:text-base">Kiến trúc sư của đế chế, linh hồn của những đêm Fergie Time, bậc thầy gieo nỗi khiếp sợ khắp nước Anh.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="trophies" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-chip text-sm uppercase tracking-[0.32em] text-gray-300">Hall of Fame</div>
+                <h2 class="section-title font-oswald text-4xl md:text-5xl uppercase font-bold mt-5">Phòng truyền thống <span class="text-mured">siêu VIP</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-400 mt-6">Mỗi chiếc cúp là một mảnh kim loại biết kể chuyện. Có chiếc kể về mưa gió Manchester, có chiếc kể về những đêm châu Âu rung chuyển.</p>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7">
+                <div class="glass-card rounded-3xl p-7 text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-mured/10 text-mured flex items-center justify-center text-3xl border border-mured/20 shadow-neonRed">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="font-oswald text-6xl text-mured counter" data-target="20">0</div>
+                    <div class="mt-2 uppercase tracking-[0.22em] text-sm text-gray-400 font-semibold">Premier League</div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-7 text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-mugold/10 text-mugold flex items-center justify-center text-3xl border border-mugold/20 shadow-neonGold">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="font-oswald text-6xl text-mugold counter" data-target="3">0</div>
+                    <div class="mt-2 uppercase tracking-[0.22em] text-sm text-gray-400 font-semibold">Champions League</div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-7 text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-white/5 text-white flex items-center justify-center text-3xl border border-white/10">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="font-oswald text-6xl text-white counter" data-target="13">0</div>
+                    <div class="mt-2 uppercase tracking-[0.22em] text-sm text-gray-400 font-semibold">FA Cup</div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-7 text-center reveal">
+                    <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-sky-400/10 text-sky-300 flex items-center justify-center text-3xl border border-sky-300/20">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div class="font-oswald text-6xl text-sky-300 counter" data-target="1">0</div>
+                    <div class="mt-2 uppercase tracking-[0.22em] text-sm text-gray-400 font-semibold">Club World Cup</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="history" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(218,41,28,0.08),transparent_35%)]"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-chip text-sm uppercase tracking-[0.32em] text-gray-300">Legacy</div>
+                <h2 class="section-title font-oswald text-4xl md:text-5xl uppercase font-bold mt-5">Dòng chảy <span class="text-mured">huyền thoại</span></h2>
+            </div>
+
+            <div class="relative pl-8 md:pl-0">
+                <div class="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 h-full w-[3px] timeline-line rounded-full"></div>
+                <div class="md:hidden absolute left-2 top-0 h-full w-[3px] timeline-line rounded-full"></div>
+
+                <div class="space-y-14 md:space-y-20">
+                    <div class="grid md:grid-cols-2 gap-8 items-center reveal">
+                        <div class="md:text-right md:pr-14 order-2 md:order-1">
+                            <div class="text-mured font-oswald text-4xl uppercase">1878</div>
+                            <h3 class="font-oswald text-3xl uppercase mt-2">Newton Heath LYR</h3>
+                            <p class="text-gray-400 mt-4">Từ những toa tàu và những người công nhân đường sắt, một hạt giống bắt đầu nảy mầm. Chưa ai biết đó sẽ là một trong những biểu tượng lớn nhất bóng đá thế giới.</p>
+                        </div>
+                        <div class="relative order-1 md:order-2">
+                            <div class="absolute left-[-34px] top-6 md:left-[-14px] md:-translate-x-1/2 w-5 h-5 rounded-full bg-mured timeline-dot"></div>
+                            <div class="glass-card rounded-3xl overflow-hidden p-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Newton_Heath_LYR_FC_1892-93.jpg" alt="Newton Heath" class="w-full h-[260px] md:h-[320px] object-cover rounded-[20px]" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 items-center reveal">
+                        <div class="relative md:order-1">
+                            <div class="absolute left-[-34px] top-6 md:right-[-14px] md:left-auto md:translate-x-1/2 w-5 h-5 rounded-full bg-mured timeline-dot"></div>
+                            <div class="glass-card rounded-3xl overflow-hidden p-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United Crest" class="w-full h-[260px] md:h-[320px] object-contain rounded-[20px] bg-white/5 p-8" />
+                            </div>
+                        </div>
+                        <div class="md:pl-14 reveal active">
+                            <div class="text-mured font-oswald text-4xl uppercase">1902</div>
+                            <h3 class="font-oswald text-3xl uppercase mt-2">Manchester United ra đời</h3>
+                            <p class="text-gray-400 mt-4">Tên gọi mới giống như cú kéo màn sân khấu. Đỏ, trắng, đen trở thành bảng màu của niềm kiêu hãnh, còn cái tên Manchester United thành âm thanh khiến cả thế giới phải ngoái nhìn.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 items-center reveal">
+                        <div class="md:text-right md:pr-14 order-2 md:order-1">
+                            <div class="text-mured font-oswald text-4xl uppercase">1958</div>
+                            <h3 class="font-oswald text-3xl uppercase mt-2">Thảm họa Munich</h3>
+                            <p class="text-gray-400 mt-4">Một vết cắt đau đớn vào lịch sử CLB. Nhưng từ tro tàn, bản lĩnh Manchester United lớn lên như thép nung đỏ, để rồi chạm đỉnh châu Âu bằng sự kiên cường không thể bẻ gãy.</p>
+                        </div>
+                        <div class="relative order-1 md:order-2">
+                            <div class="absolute left-[-34px] top-6 md:left-[-14px] md:-translate-x-1/2 w-5 h-5 rounded-full bg-mured timeline-dot"></div>
+                            <div class="glass-card rounded-3xl overflow-hidden p-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Munich_clock.jpg" alt="Munich Memorial" class="w-full h-[260px] md:h-[320px] object-cover rounded-[20px]" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 items-center reveal">
+                        <div class="relative md:order-1">
+                            <div class="absolute left-[-34px] top-6 md:right-[-14px] md:left-auto md:translate-x-1/2 w-5 h-5 rounded-full bg-mured timeline-dot"></div>
+                            <div class="glass-card rounded-3xl overflow-hidden p-2">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Old_Trafford_inside_20060726_1.jpg" alt="Old Trafford" class="w-full h-[260px] md:h-[320px] object-cover rounded-[20px]" />
+                            </div>
+                        </div>
+                        <div class="md:pl-14">
+                            <div class="text-mured font-oswald text-4xl uppercase">1986 - 2013</div>
+                            <h3 class="font-oswald text-3xl uppercase mt-2">Kỷ nguyên Sir Alex</h3>
+                            <p class="text-gray-400 mt-4">26 năm, 38 danh hiệu, vô số cú lội ngược dòng và hai đỉnh cao châu Âu. Đây không còn là một triều đại bình thường, mà là thiên sử đỏ viết bằng bàn thắng, cá tính và sự lạnh lùng của kẻ thống trị.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-chip text-sm uppercase tracking-[0.32em] text-gray-300">Visual Vault</div>
+                <h2 class="section-title font-oswald text-4xl md:text-5xl uppercase font-bold mt-5">Hình ảnh <span class="text-mured">thay mới toàn bộ</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-400 mt-6">Mình đã thay bộ ảnh sang tông sang hơn: logo sắc nét, Old Trafford rộng khung, tượng đài CLB và góc ảnh đậm chất fanzone.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <button class="gallery-item glass-card rounded-[28px] overflow-hidden lg:col-span-2 lg:row-span-2 relative aspect-[1/1] lg:aspect-auto reveal" data-image="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" data-title="Manchester United Crest">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-10"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Logo MU" class="w-full h-full object-contain p-10 bg-[#121212]" />
+                    <div class="absolute z-20 bottom-5 left-5 text-left">
+                        <div class="font-oswald text-2xl uppercase">Logo huy hiệu</div>
+                        <div class="text-sm text-gray-300 tracking-[0.2em] uppercase">Biểu tượng bất tử</div>
+                    </div>
+                </button>
+
+                <button class="gallery-item glass-card rounded-[28px] overflow-hidden relative aspect-square reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/1/1a/Old_Trafford_inside_20060726_1.jpg" data-title="Old Trafford">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Old_Trafford_inside_20060726_1.jpg" alt="Old Trafford" class="w-full h-full object-cover" />
+                    <div class="absolute z-20 bottom-4 left-4 text-left font-oswald text-xl uppercase">Old Trafford</div>
+                </button>
+
+                <button class="gallery-item glass-card rounded-[28px] overflow-hidden relative aspect-square reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/4/43/Old_Trafford_Sir_Matt_Busby.jpg" data-title="Sir Matt Busby Statue">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Old_Trafford_Sir_Matt_Busby.jpg" alt="Sir Matt Busby" class="w-full h-full object-cover" />
+                    <div class="absolute z-20 bottom-4 left-4 text-left font-oswald text-xl uppercase">Sir Matt Busby</div>
+                </button>
+
+                <button class="gallery-item glass-card rounded-[28px] overflow-hidden relative aspect-square reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/5/52/United_Trinity_statue.jpg" data-title="United Trinity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/United_Trinity_statue.jpg" alt="United Trinity" class="w-full h-full object-cover" />
+                    <div class="absolute z-20 bottom-4 left-4 text-left font-oswald text-xl uppercase">United Trinity</div>
+                </button>
+
+                <button class="gallery-item glass-card rounded-[28px] overflow-hidden relative aspect-square reveal" data-image="https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=1400&q=80" data-title="Red Atmosphere">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=1400&q=80" alt="Red Atmosphere" class="w-full h-full object-cover" />
+                    <div class="absolute z-20 bottom-4 left-4 text-left font-oswald text-xl uppercase">Không khí đỏ rực</div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="videos" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-chip text-sm uppercase tracking-[0.32em] text-gray-300">Moments</div>
+                <h2 class="section-title font-oswald text-4xl md:text-5xl uppercase font-bold mt-5">Khoảnh khắc <span class="text-mured">bùng nổ</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-400 mt-6">Khung video được làm lại theo phong cách neon-glass, nổi bật hơn, hợp tổng thể giao diện thay vì chỉ là một iframe đặt đơn lẻ.</p>
+            </div>
+
+            <div class="glass-card rounded-[30px] p-3 md:p-4 reveal border border-mured/20 shadow-neonRed">
+                <div class="relative rounded-[24px] overflow-hidden">
+                    <div class="absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-black/45 to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 ring-1 ring-white/10 rounded-[24px] pointer-events-none"></div>
+                    <div class="relative w-full h-0 pb-[56.25%]">
+                        <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/Zqj_QWz0oio?autoplay=0&mute=0" title="Manchester United Greatest Moments" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legends" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-chip text-sm uppercase tracking-[0.32em] text-gray-300">Icons</div>
+                <h2 class="section-title font-oswald text-4xl md:text-5xl uppercase font-bold mt-5">Đền đài <span class="text-mured">huyền thoại</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-400 mt-6">Bộ card được chỉnh lại theo phong cách tạp chí thể thao cao cấp: ảnh sâu hơn, overlay mềm hơn, typography khỏe hơn.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <div class="legend-card glass-card rounded-[28px] overflow-hidden aspect-[4/5] relative reveal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Sir_Alex_Ferguson_2011.jpg" alt="Sir Alex Ferguson" class="w-full h-full object-cover object-top opacity-80" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="text-mugold text-xs uppercase tracking-[0.32em] mb-2">Manager</div>
+                        <h3 class="font-oswald text-3xl uppercase text-glow">Sir Alex Ferguson</h3>
+                        <p class="text-gray-300 mt-3 text-sm">Người biến Manchester United thành cơn bão đỏ kéo dài hơn hai thập kỷ.</p>
+                    </div>
+                </div>
+
+                <div class="legend-card glass-card rounded-[28px] overflow-hidden aspect-[4/5] relative reveal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg" alt="Cristiano Ronaldo" class="w-full h-full object-cover object-top opacity-80" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="text-mured text-xs uppercase tracking-[0.32em] mb-2">Number 7</div>
+                        <h3 class="font-oswald text-3xl uppercase gold-glow">Cristiano Ronaldo</h3>
+                        <p class="text-gray-300 mt-3 text-sm">Từ viên ngọc thô tới siêu sao toàn cầu, Old Trafford từng là bệ phóng rực lửa của CR7.</p>
+                    </div>
+                </div>
+
+                <div class="legend-card glass-card rounded-[28px] overflow-hidden aspect-[4/5] relative reveal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Wayne_Rooney_2012.jpg" alt="Wayne Rooney" class="w-full h-full object-cover object-top opacity-80" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="text-mured text-xs uppercase tracking-[0.32em] mb-2">Captain</div>
+                        <h3 class="font-oswald text-3xl uppercase text-glow">Wayne Rooney</h3>
+                        <p class="text-gray-300 mt-3 text-sm">Cỗ máy càn quét, tay săn bàn lịch sử, trái tim lì lợm của cả một thế hệ Quỷ Đỏ.</p>
+                    </div>
+                </div>
+
+                <div class="legend-card glass-card rounded-[28px] overflow-hidden aspect-[4/5] relative reveal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Eric_Cantona_2010.jpg" alt="Eric Cantona" class="w-full h-full object-cover object-top opacity-80" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="text-mured text-xs uppercase tracking-[0.32em] mb-2">King Eric</div>
+                        <h3 class="font-oswald text-3xl uppercase text-glow">Eric Cantona</h3>
+                        <p class="text-gray-300 mt-3 text-sm">Ngạo nghễ, khác biệt và sắc bén như lưỡi dao. Ông mở tung cánh cửa kỷ nguyên chiến thắng.</p>
+                    </div>
+                </div>
+
+                <div class="legend-card glass-card rounded-[28px] overflow-hidden aspect-[4/5] relative reveal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Ryan_Giggs_2011.jpg" alt="Ryan Giggs" class="w-full h-full object-cover object-top opacity-80" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="text-mured text-xs uppercase tracking-[0.32em] mb-2">Wing Wizard</div>
+                        <h3 class="font-oswald text-3xl uppercase text-glow">Ryan Giggs</h3>
+                        <p class="text-gray-300 mt-3 text-sm">Cơn lốc cánh trái bền bỉ như đồng hồ sân cũ, chạy xuyên hai thập kỷ mà vẫn sắc lẹm.</p>
+                    </div>
+                </div>
+
+                <div class="legend-card glass-card rounded-[28px] overflow-hidden aspect-[4/5] relative reveal">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Bobby_Charlton_1966.jpg" alt="Sir Bobby Charlton" class="w-full h-full object-cover object-top opacity-80" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="text-mured text-xs uppercase tracking-[0.32em] mb-2">Immortal</div>
+                        <h3 class="font-oswald text-3xl uppercase text-glow">Sir Bobby Charlton</h3>
+                        <p class="text-gray-300 mt-3 text-sm">Biểu tượng tinh thần của sự hồi sinh sau Munich và một chương vàng không bao giờ khép lại.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="relative py-14 border-t border-white/10 bg-black/60 backdrop-blur-sm">
+        <div class="absolute inset-x-0 bottom-0 h-40 bg-[radial-gradient(circle_at_center,rgba(218,41,28,0.18),transparent_55%)]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
+            <div class="w-20 h-20 rounded-full bg-white/5 border border-white/10 p-3 mb-6 shadow-neonGold">
+                <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United Logo" class="w-full h-full object-contain" />
+            </div>
+            <h2 class="font-oswald text-3xl uppercase tracking-[0.22em] text-glow text-center">Glory Glory Man United</h2>
+            <p class="text-gray-400 text-center mt-4 max-w-2xl">Bản giao diện fanmade nâng cấp với phong cách premium, hình ảnh mới và hiệu ứng mượt hơn cho trải nghiệm web nổi bật hơn hẳn bản cũ.</p>
+
+            <div class="flex gap-4 mt-8">
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-lg hover:bg-mured hover:text-white transition hover:-translate-y-1"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-lg hover:bg-mured hover:text-white transition hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-lg hover:bg-mured hover:text-white transition hover:-translate-y-1"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-lg hover:bg-mured hover:text-white transition hover:-translate-y-1"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+
+            <p class="text-gray-500 text-sm mt-8 text-center">© 2026 Fanmade premium tribute page for Manchester United.</p>
+        </div>
+    </footer>
+
+    <div id="lightbox" class="lightbox fixed inset-0 z-[100] bg-black/90 p-4 md:p-8 flex items-center justify-center">
+        <button id="closeLightbox" class="absolute top-5 right-5 w-12 h-12 rounded-full bg-white/10 text-white text-xl border border-white/10 hover:bg-mured transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="w-full max-w-5xl">
+            <div class="glass-card rounded-[28px] p-3 md:p-4">
+                <img id="lightboxImage" src="" alt="Preview" class="w-full max-h-[78vh] object-contain rounded-[22px] bg-[#111]" />
+                <div id="lightboxTitle" class="font-oswald text-2xl uppercase mt-4 px-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isMusicPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '<i class="fa-solid fa-music text-xl"></i>';
+                musicBtn.classList.remove('bg-mugold', 'text-black', 'shadow-neonGold');
+                musicBtn.classList.add('bg-mured', 'text-white', 'shadow-neonRed');
+            } else {
+                bgMusic.volume = 0.35;
+                bgMusic.play().catch(() => alert('Trình duyệt cần bạn click lại để phát nhạc nền nhé.'));
+                musicBtn.innerHTML = '<i class="fa-solid fa-pause text-xl"></i>';
+                musicBtn.classList.remove('bg-mured', 'text-white', 'shadow-neonRed');
+                musicBtn.classList.add('bg-mugold', 'text-black', 'shadow-neonGold');
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                navbar.classList.add('py-2', 'shadow-[0_10px_30px_rgba(0,0,0,.35)]');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2', 'shadow-[0_10px_30px_rgba(0,0,0,.35)]');
+            }
+        });
+
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 4500);
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const counters = document.querySelectorAll('.counter');
+        let counted = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+
+                    if (entry.target.closest('#trophies') && !counted) {
+                        counted = true;
+                        counters.forEach(counter => {
+                            const target = +counter.dataset.target;
+                            const duration = 1800;
+                            const step = target / (duration / 16);
+                            let current = 0;
+
+                            const updateCounter = () => {
+                                current += step;
+                                if (current < target) {
+                                    counter.textContent = Math.ceil(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.textContent = target;
+                                }
+                            };
+                            updateCounter();
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+        revealElements.forEach(el => observer.observe(el));
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const closeLightbox = document.getElementById('closeLightbox');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                lightboxImage.src = item.dataset.image;
+                lightboxTitle.textContent = item.dataset.title;
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeViewer = () => {
+            lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+        };
+
+        closeLightbox.addEventListener('click', closeViewer);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeViewer();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeViewer();
+        });
+    </script>
+</body>
+</html>
