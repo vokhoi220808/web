@@ -1,323 +1,429 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manchester United - Di Sản Quỷ Đỏ</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manchester United | Lịch sử, danh hiệu và biểu tượng</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        mured: '#DA291C',
+                        mudark: '#0B0B0B',
+                        mupanel: '#141414',
+                        muline: 'rgba(255,255,255,.10)'
+                    },
+                    boxShadow: {
+                        red: '0 14px 40px rgba(218,41,28,.18)'
+                    }
+                }
+            }
+        };
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
-
-        :root {
-            --mu-red: #DA291C;
-            --mu-black: #000000;
-            --mu-gold: #FBE122;
-        }
-
         body {
-            font-family: 'Roboto', sans-serif;
-            scroll-behavior: smooth;
-            background-color: var(--mu-black);
-            color: white;
+            background: #0b0b0b;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
         }
 
-        h1, h2, h3, .oswald { font-family: 'Oswald', sans-serif; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0b0b0b; }
+        ::-webkit-scrollbar-thumb { background: #DA291C; border-radius: 999px; }
 
-        .bg-mu-red { background-color: var(--mu-red); }
-        .text-mu-red { color: var(--mu-red); }
-
-        /* Timeline Styles */
-        .timeline-container {
-            position: relative;
-            padding: 2rem 0;
-        }
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            width: 2px;
-            height: 100%;
-            background: var(--mu-red);
-            transform: translateX(-50%);
-        }
-        @media (max-width: 768px) {
-            .timeline-line { left: 20px; }
+        .nav-blur {
+            backdrop-filter: blur(14px);
+            background: rgba(11,11,11,.86);
+            border-bottom: 1px solid rgba(255,255,255,.08);
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: var(--mu-red);
-            background: rgba(218, 41, 28, 0.05);
+        .panel {
+            background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 12px 40px rgba(0,0,0,.35);
         }
 
-        .legend-img {
-            filter: grayscale(100%);
-            transition: all 0.5s ease;
-        }
-        .legend-card:hover .legend-img {
-            filter: grayscale(0%);
-            transform: scale(1.05);
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65), rgba(0,0,0,.90));
         }
 
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all .7s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-line::after {
+            content: '';
+            display: block;
+            width: 84px;
+            height: 4px;
+            margin: 14px auto 0;
+            background: #DA291C;
+            border-radius: 999px;
+        }
+
+        .gallery-card img {
+            transition: transform .55s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.06);
+        }
+
+        .lightbox {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+
+        .lightbox.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-menu {
+            max-height: 0;
             overflow: hidden;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            transition: max-height .3s ease;
         }
 
-        /* Responsive image fixes */
-        .history-img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 0.5rem;
+        .mobile-menu.open {
+            max-height: 340px;
         }
     </style>
 </head>
-<body>
+<body class="antialiased selection:bg-mured selection:text-white">
+    <nav id="navbar" class="fixed top-0 inset-x-0 z-50 nav-blur py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-4">
+                <a href="#top" class="flex items-center gap-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United crest" class="w-11 h-11 object-contain" />
+                    <div class="hidden sm:block">
+                        <div class="font-oswald text-2xl uppercase tracking-wider">Manchester United</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-[0.28em]">The Red Devils</div>
+                    </div>
+                </a>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center transition-all duration-300 bg-black/80 backdrop-blur-md border-b border-white/10" id="navbar">
-        <div class="text-2xl font-bold oswald tracking-tighter">
-            <span class="text-mu-red">MANCHESTER</span> UNITED
-        </div>
-        <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest">
-            <a href="#history" class="hover:text-mu-red">Lịch sử</a>
-            <a href="#legends" class="hover:text-mu-red">Huyền thoại</a>
-            <a href="#trophies" class="hover:text-mu-red">Danh hiệu</a>
-            <a href="#moments" class="hover:text-mu-red">Video</a>
+                <div class="hidden md:flex items-center gap-7 font-oswald uppercase tracking-wider text-[17px]">
+                    <a href="#about" class="hover:text-mured transition">Giới thiệu</a>
+                    <a href="#history" class="hover:text-mured transition">Lịch sử</a>
+                    <a href="#trophies" class="hover:text-mured transition">Danh hiệu</a>
+                    <a href="#icons" class="hover:text-mured transition">Biểu tượng</a>
+                    <a href="#gallery" class="hover:text-mured transition">Hình ảnh</a>
+                </div>
+
+                <button id="menuBtn" class="md:hidden w-11 h-11 rounded-xl border border-white/10 bg-white/5 text-white">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobileMenu" class="mobile-menu md:hidden">
+                <div class="flex flex-col gap-3 pt-4 pb-2 font-oswald uppercase tracking-wider text-lg">
+                    <a href="#about" class="py-1 hover:text-mured">Giới thiệu</a>
+                    <a href="#history" class="py-1 hover:text-mured">Lịch sử</a>
+                    <a href="#trophies" class="py-1 hover:text-mured">Danh hiệu</a>
+                    <a href="#icons" class="py-1 hover:text-mured">Biểu tượng</a>
+                    <a href="#gallery" class="py-1 hover:text-mured">Hình ảnh</a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="h-[90vh] relative flex items-center justify-center">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1920&q=80" class="w-full h-full object-cover opacity-40">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black"></div>
+    <header id="top" class="relative min-h-screen flex items-end pt-24">
+        <div class="absolute inset-0">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20Old%20Trafford.jpg" alt="Old Trafford" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 hero-overlay"></div>
         </div>
-        <div class="relative z-10 text-center px-4">
-            <h2 class="text-mu-red text-xl font-bold tracking-[0.4em] uppercase mb-4">Nhà hát của những giấc mơ</h2>
-            <h1 class="text-7xl md:text-9xl font-bold oswald uppercase mb-6 leading-none">THE RED <br><span class="text-mu-red">DEVILS</span></h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-lg mb-8">Hơn 140 năm lịch sử, từ một đội bóng công nhân đường sắt trở thành biểu tượng bóng đá toàn cầu.</p>
-            <a href="#history" class="inline-block border-2 border-mu-red text-white px-10 py-3 font-bold uppercase hover:bg-mu-red transition">Khám phá hành trình</a>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-16 md:pb-24">
+            <div class="max-w-3xl reveal active">
+                <p class="font-oswald text-mured text-lg md:text-xl uppercase tracking-[0.30em] mb-4">Manchester United Football Club</p>
+                <h1 class="font-oswald text-5xl sm:text-6xl lg:text-8xl leading-none uppercase mb-6">Lịch sử, bản sắc và những biểu tượng của Quỷ Đỏ</h1>
+                <p class="text-gray-200 text-lg md:text-xl max-w-2xl mb-8">
+                    Một phiên bản tập trung vào chính câu lạc bộ: hình ảnh dễ dùng hơn, nội dung đi thẳng vào lịch sử, danh hiệu, sân nhà Old Trafford và những cột mốc làm nên Manchester United.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#about" class="px-7 py-3.5 bg-mured hover:bg-red-700 rounded-xl font-oswald uppercase tracking-[0.18em] transition">Xem nội dung</a>
+                    <a href="#gallery" class="px-7 py-3.5 border border-white/15 bg-black/25 hover:border-mured rounded-xl font-oswald uppercase tracking-[0.18em] transition">Xem hình ảnh</a>
+                </div>
+            </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Detailed History Timeline -->
-    <section id="history" class="py-24 bg-mu-black">
-        <div class="container mx-auto px-6">
-            <h2 class="text-5xl font-bold oswald text-center mb-20 uppercase tracking-tight">Dòng Thời Gian <span class="text-mu-red">Lịch Sử</span></h2>
-            
-            <div class="timeline-container">
-                <div class="timeline-line"></div>
+    <section id="about" class="py-20 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm uppercase tracking-[0.24em] text-gray-300 mb-5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-mured"></span>
+                        Câu lạc bộ
+                    </div>
+                    <h2 class="font-oswald text-4xl md:text-5xl uppercase mb-5">Manchester United là ai?</h2>
+                    <div class="space-y-4 text-gray-300 leading-7 text-[17px]">
+                        <p>Manchester United được thành lập năm 1878 với tên gọi Newton Heath LYR trước khi đổi tên thành Manchester United vào năm 1902. Đội bóng gắn với màu đỏ, sân Old Trafford và lượng người hâm mộ trải dài trên khắp thế giới.</p>
+                        <p>Trang này được chỉnh lại để đi đúng trọng tâm: bỏ phần màu mè không cần thiết, chuyển sang bố cục rõ ràng hơn, ảnh gắn trực tiếp với lịch sử đội bóng và nội dung dễ đọc hơn.</p>
+                        <p>Bạn có thể tiếp tục thay thêm ảnh, đổi text hoặc chèn cầu thủ yêu thích sau trên bộ khung này mà không bị rối giao diện.</p>
+                    </div>
+                </div>
 
-                <!-- Period 1 -->
-                <div class="relative mb-20 flex flex-col md:flex-row items-center justify-between w-full">
-                    <div class="md:w-5/12 mb-8 md:mb-0 text-right pr-0 md:pr-12 order-1 md:order-1">
-                        <h3 class="text-mu-red text-3xl font-bold oswald">1878 - 1945</h3>
-                        <h4 class="text-xl font-bold mb-4">Bình minh của Newton Heath</h4>
-                        <p class="text-gray-400">Câu lạc bộ được thành lập bởi bộ phận Vận tải và Kho hàng của ga đường sắt Lancashire và Yorkshire. Năm 1902, đội bóng đổi tên thành Manchester United và chuyển đến Old Trafford vào năm 1910.</p>
-                        <div class="mt-4 flex flex-wrap justify-end gap-2">
-                            <span class="bg-white/10 px-3 py-1 text-[10px] rounded border border-white/20">Vô địch Anh: 1908, 1911</span>
-                            <span class="bg-white/10 px-3 py-1 text-[10px] rounded border border-white/20">Cúp FA: 1909</span>
+                <div class="panel rounded-3xl p-6 md:p-7 reveal">
+                    <div class="grid grid-cols-2 gap-4 md:gap-5">
+                        <div class="rounded-2xl bg-[#111] border border-white/10 p-6 flex items-center justify-center col-span-2">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United crest" class="w-40 md:w-48 h-auto object-contain" />
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.20em] mb-2">Thành lập</div>
+                            <div class="font-oswald text-4xl">1878</div>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.20em] mb-2">Sân nhà</div>
+                            <div class="font-oswald text-4xl">Old Trafford</div>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.20em] mb-2">Tên cũ</div>
+                            <div class="font-oswald text-4xl">Newton Heath</div>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                            <div class="text-gray-400 text-sm uppercase tracking-[0.20em] mb-2">Biệt danh</div>
+                            <div class="font-oswald text-4xl">Quỷ Đỏ</div>
                         </div>
                     </div>
-                    <div class="z-10 w-10 h-10 bg-mu-red rounded-full border-4 border-black flex items-center justify-center shrink-0 order-2">
-                        <i class="fas fa-train text-xs"></i>
-                    </div>
-                    <div class="md:w-5/12 order-3 pl-0 md:pl-12">
-                         <img src="image_21f219.jpg" class="history-img shadow-xl grayscale" alt="Manchester United Early Squad">
-                    </div>
-                </div>
-
-                <!-- Period 2 -->
-                <div class="relative mb-20 flex flex-col md:flex-row items-center justify-between w-full">
-                    <div class="md:w-5/12 mb-8 md:mb-0 order-3 md:order-1 pr-0 md:pr-12">
-                        <img src="image_21f538.jpg" class="history-img shadow-xl" alt="Busby Babes">
-                    </div>
-                    <div class="z-10 w-10 h-10 bg-mu-red rounded-full border-4 border-black flex items-center justify-center shrink-0 order-2">
-                        <i class="fas fa-star text-xs"></i>
-                    </div>
-                    <div class="md:w-5/12 pl-0 md:pl-12 order-1 md:order-3">
-                        <h3 class="text-mu-red text-3xl font-bold oswald">1945 - 1969</h3>
-                        <h4 class="text-xl font-bold mb-4">Kỷ nguyên Sir Matt Busby</h4>
-                        <p class="text-gray-400">Giai đoạn của những "Đứa trẻ của Busby". Dù trải qua Thảm họa Munich 1958 đau thương, MU đã tái sinh rực rỡ để trở thành CLB Anh đầu tiên vô địch Cúp C1 vào năm 1968.</p>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="bg-white/10 px-3 py-1 text-[10px] rounded border border-white/20">Vô địch Anh: 5 lần</span>
-                            <span class="bg-white/10 px-3 py-1 text-[10px] rounded border border-white/20 text-mu-red font-bold">Cúp C1: 1968</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Period 3 -->
-                <div class="relative mb-20 flex flex-col md:flex-row items-center justify-between w-full">
-                    <div class="md:w-5/12 mb-8 md:mb-0 text-right pr-0 md:pr-12 order-1">
-                        <h3 class="text-mu-red text-3xl font-bold oswald">1986 - 2013</h3>
-                        <h4 class="text-xl font-bold mb-4">Đế chế Sir Alex Ferguson</h4>
-                        <p class="text-gray-400">Thời hoàng kim rực rỡ nhất. Dưới sự dẫn dắt của Sir Alex, MU thống trị nước Anh và giành cú ăn ba thần thánh năm 1999 cùng chức vô địch Champions League 2008.</p>
-                        <div class="mt-4 flex flex-wrap justify-end gap-2">
-                            <span class="bg-white/10 px-3 py-1 text-[10px] rounded border border-white/20">Premier League: 13 lần</span>
-                            <span class="bg-white/10 px-3 py-1 text-[10px] rounded border border-white/20 text-mu-red font-bold">UCL: 1999, 2008</span>
-                        </div>
-                    </div>
-                    <div class="z-10 w-10 h-10 bg-mu-red rounded-full border-4 border-black flex items-center justify-center shrink-0 order-2">
-                        <i class="fas fa-trophy text-xs"></i>
-                    </div>
-                    <div class="md:w-5/12 order-3 pl-0 md:pl-12">
-                        <img src="image_21f87e.jpg" class="history-img shadow-xl" alt="Ferguson Era Trophies">
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Legends Section -->
-    <section id="legends" class="py-24 bg-mu-dark-gray overflow-hidden">
-        <div class="container mx-auto px-6">
-            <h2 class="text-5xl font-bold oswald text-center mb-16 uppercase">Những Tượng Đài <span class="text-mu-red">Vĩnh Cửu</span></h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Legend 1: Eric Cantona -->
-                <div class="legend-card glass-card rounded-xl overflow-hidden group">
-                    <div class="h-80 overflow-hidden">
-                        <img src="image_21edfa.jpg" alt="Eric Cantona" class="w-full h-full object-cover legend-img">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold uppercase oswald">Eric Cantona</h3>
-                        <p class="text-mu-red text-xs mb-3 font-bold">"THE KING"</p>
-                        <p class="text-gray-400 text-sm">Người truyền lửa, cá tính ngông cuồng đã giúp MU đánh thức bản năng vô địch những năm 90.</p>
-                    </div>
-                </div>
+    <section id="history" class="py-20 md:py-24 border-t border-white/10 bg-[#0f0f0f]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-line font-oswald text-4xl md:text-5xl uppercase">Các mốc lịch sử chính</h2>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto">Thay vì những câu slogan rỗng, phần này đi thẳng vào những cột mốc quan trọng nhất của Manchester United.</p>
+            </div>
 
-                <!-- Legend 2: Sir Bobby Charlton -->
-                <div class="legend-card glass-card rounded-xl overflow-hidden group">
-                    <div class="h-80 overflow-hidden">
-                        <img src="image_21ee52.jpg" alt="Sir Bobby Charlton" class="w-full h-full object-cover legend-img">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold uppercase oswald">Sir Bobby Charlton</h3>
-                        <p class="text-mu-red text-xs mb-3 font-bold">QUẢ BÓNG VÀNG 1966</p>
-                        <p class="text-gray-400 text-sm">Linh hồn của câu lạc bộ, biểu tượng của sự sống sót và vươn lên sau thảm họa Munich.</p>
-                    </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="panel rounded-3xl p-6 reveal">
+                    <div class="font-oswald text-4xl text-mured mb-2">1878</div>
+                    <h3 class="font-oswald text-2xl uppercase mb-3">Khởi đầu với Newton Heath</h3>
+                    <p class="text-gray-300 leading-7">Đội bóng được thành lập bởi công nhân ngành đường sắt. Đây là gốc rễ của CLB trước khi bước vào chương lịch sử mang tên Manchester United.</p>
                 </div>
-
-                <!-- Legend 3: Cristiano Ronaldo -->
-                <div class="legend-card glass-card rounded-xl overflow-hidden group">
-                    <div class="h-80 overflow-hidden">
-                        <img src="image_21f15c.jpg" alt="Cristiano Ronaldo" class="w-full h-full object-cover legend-img">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold uppercase oswald">Cristiano Ronaldo</h3>
-                        <p class="text-mu-red text-xs mb-3 font-bold">CR7 - QUẢ BÓNG VÀNG 2008</p>
-                        <p class="text-gray-400 text-sm">Cầu thủ vĩ đại nhất từng khoác áo MU trong kỷ nguyên hiện đại với những kỹ năng vô tiền khoáng hậu.</p>
-                    </div>
+                <div class="panel rounded-3xl p-6 reveal">
+                    <div class="font-oswald text-4xl text-mured mb-2">1902</div>
+                    <h3 class="font-oswald text-2xl uppercase mb-3">Đổi tên thành Manchester United</h3>
+                    <p class="text-gray-300 leading-7">Bước ngoặt định danh cho đội bóng, mở ra thời kỳ phát triển với bộ nhận diện đỏ trắng đen quen thuộc.</p>
                 </div>
-
-                <!-- Legend 4: Wayne Rooney -->
-                <div class="legend-card glass-card rounded-xl overflow-hidden group">
-                    <div class="h-80 overflow-hidden">
-                        <img src="image_21f17e.jpg" alt="Wayne Rooney" class="w-full h-full object-cover legend-img">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold uppercase oswald">Wayne Rooney</h3>
-                        <p class="text-mu-red text-xs mb-3 font-bold">CHÂN SÚT SỐ 1 LỊCH SỬ</p>
-                        <p class="text-gray-400 text-sm">Ghi 253 bàn thắng cho CLB. Sự nhiệt huyết và tinh thần chiến đấu không bao giờ bỏ cuộc.</p>
-                    </div>
+                <div class="panel rounded-3xl p-6 reveal">
+                    <div class="font-oswald text-4xl text-mured mb-2">1958</div>
+                    <h3 class="font-oswald text-2xl uppercase mb-3">Thảm họa Munich</h3>
+                    <p class="text-gray-300 leading-7">Sự kiện bi thương nhất trong lịch sử CLB. Từ đây, tinh thần vượt lên nghịch cảnh trở thành một phần bản sắc của Manchester United.</p>
+                </div>
+                <div class="panel rounded-3xl p-6 reveal">
+                    <div class="font-oswald text-4xl text-mured mb-2">1986 - 2013</div>
+                    <h3 class="font-oswald text-2xl uppercase mb-3">Kỷ nguyên Sir Alex Ferguson</h3>
+                    <p class="text-gray-300 leading-7">Giai đoạn thành công nhất của CLB với hàng loạt danh hiệu lớn, đưa Manchester United trở thành biểu tượng quyền lực của bóng đá Anh.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Trophies Statistics -->
-    <section id="trophies" class="py-24 bg-mu-black border-y border-white/5">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold oswald mb-16 uppercase">Phòng Truyền Thống <span class="text-mu-red">Rực Rỡ</span></h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-                <div class="p-4">
-                    <div class="text-5xl font-bold text-mu-red mb-2 oswald">20</div>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Vô Địch Anh</p>
+    <section id="trophies" class="py-20 md:py-24 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-line font-oswald text-4xl md:text-5xl uppercase">Danh hiệu nổi bật</h2>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto">Những con số cơ bản để nhìn ra tầm vóc của CLB, trình bày gọn và rõ thay vì nhồi hiệu ứng.</p>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                <div class="panel rounded-3xl p-6 text-center reveal">
+                    <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-mured/10 text-mured flex items-center justify-center text-2xl"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="font-oswald text-6xl mb-1">20</div>
+                    <div class="text-sm uppercase tracking-[0.22em] text-gray-400">VĐQG Anh</div>
                 </div>
-                <div class="p-4">
-                    <div class="text-5xl font-bold text-mu-red mb-2 oswald">13</div>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Cúp FA</p>
+                <div class="panel rounded-3xl p-6 text-center reveal">
+                    <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-mured/10 text-mured flex items-center justify-center text-2xl"><i class="fa-solid fa-star"></i></div>
+                    <div class="font-oswald text-6xl mb-1">3</div>
+                    <div class="text-sm uppercase tracking-[0.22em] text-gray-400">Cúp C1 / UCL</div>
                 </div>
-                <div class="p-4">
-                    <div class="text-5xl font-bold text-mu-red mb-2 oswald">3</div>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Champions League</p>
+                <div class="panel rounded-3xl p-6 text-center reveal">
+                    <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-mured/10 text-mured flex items-center justify-center text-2xl"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="font-oswald text-6xl mb-1">13</div>
+                    <div class="text-sm uppercase tracking-[0.22em] text-gray-400">FA Cup</div>
                 </div>
-                <div class="p-4">
-                    <div class="text-5xl font-bold text-mu-red mb-2 oswald">6</div>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Cúp Liên Đoàn</p>
-                </div>
-                <div class="p-4">
-                    <div class="text-5xl font-bold text-mu-red mb-2 oswald">1</div>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Europa League</p>
-                </div>
-                <div class="p-4">
-                    <div class="text-5xl font-bold text-mu-red mb-2 oswald">2</div>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Thế Giới (CLB)</p>
+                <div class="panel rounded-3xl p-6 text-center reveal">
+                    <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-mured/10 text-mured flex items-center justify-center text-2xl"><i class="fa-solid fa-globe"></i></div>
+                    <div class="font-oswald text-6xl mb-1">1</div>
+                    <div class="text-sm uppercase tracking-[0.22em] text-gray-400">Club World Cup</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Video Moments -->
-    <section id="moments" class="py-24 bg-mu-dark-gray">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold oswald mb-12 uppercase text-center">Video <span class="text-mu-red">Khoảnh Khắc</span></h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="glass-card p-4 rounded-2xl">
-                    <div class="video-container rounded-lg overflow-hidden">
-                        <iframe src="https://www.youtube.com/watch?v=iQqHtZP6x08" frameborder="0" allowfullscreen></iframe>
+    <section id="icons" class="py-20 md:py-24 border-t border-white/10 bg-[#0f0f0f]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-line font-oswald text-4xl md:text-5xl uppercase">Những biểu tượng gắn với CLB</h2>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto">Phần này thay cho các thẻ cầu thủ rời rạc. Mỗi khối gắn với một chương rõ ràng trong lịch sử Manchester United.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <article class="panel rounded-3xl overflow-hidden reveal">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20FC%201957.jpg" alt="Manchester United 1957" class="w-full h-64 object-cover" />
+                    <div class="p-6">
+                        <h3 class="font-oswald text-2xl uppercase mb-3">Busby Babes</h3>
+                        <p class="text-gray-300 leading-7">Thế hệ trẻ tài năng của Sir Matt Busby, tượng trưng cho một giai đoạn đẹp và cũng đầy bi thương trong lịch sử CLB.</p>
                     </div>
-                    <h4 class="text-lg font-bold mt-4 uppercase oswald">Cú Ăn Ba 1999</h4>
-                    <p class="text-gray-500 text-sm mt-2">Clip huyền thoại về mùa giải vĩ đại nhất lịch sử câu lạc bộ.</p>
-                </div>
-                <div class="glass-card p-4 rounded-2xl">
-                    <div class="video-container rounded-lg overflow-hidden">
-                        <iframe src="https://www.youtube.com/watch?v=bq_2sFtKvK8&t=20s" frameborder="0" allowfullscreen></iframe>
+                </article>
+
+                <article class="panel rounded-3xl overflow-hidden reveal">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Alex%20Ferguson%2002.jpg" alt="Sir Alex Ferguson" class="w-full h-64 object-cover object-top" />
+                    <div class="p-6">
+                        <h3 class="font-oswald text-2xl uppercase mb-3">Sir Alex Ferguson</h3>
+                        <p class="text-gray-300 leading-7">Người định hình giai đoạn thành công nhất của Manchester United và biến Old Trafford thành pháo đài của bóng đá Anh.</p>
                     </div>
-                    <h4 class="text-lg font-bold mt-4 uppercase oswald">Top Bàn Thắng Đẹp Nhất</h4>
-                    <p class="text-gray-500 text-sm mt-2">Tổng hợp những siêu phẩm đi vào lòng người của các Quỷ Đỏ.</p>
-                </div>
+                </article>
+
+                <article class="panel rounded-3xl overflow-hidden reveal">
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1999%20UEFA%20Champions%20League%20celebration%20(edited).jpg" alt="Manchester United 1999" class="w-full h-64 object-cover" />
+                    <div class="p-6">
+                        <h3 class="font-oswald text-2xl uppercase mb-3">Cú ăn ba 1999</h3>
+                        <p class="text-gray-300 leading-7">Một trong những đỉnh cao lớn nhất của CLB, gắn với trận chung kết Champions League và mùa giải huyền thoại.</p>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-black py-16 border-t border-mu-red/20">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold oswald tracking-widest uppercase mb-4 text-mu-red">GLORY GLORY MAN UNITED</h2>
-            <p class="text-gray-500 max-w-lg mx-auto text-sm">Một lần là Quỷ Đỏ, cả đời là Quỷ Đỏ. Chúng tôi không bao giờ chết, chúng tôi chỉ đơn giản là lịch sử.</p>
-            <div class="flex justify-center space-x-6 mt-8 text-xl">
-                <a href="#" class="text-gray-500 hover:text-mu-red transition"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-gray-500 hover:text-mu-red transition"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-gray-500 hover:text-mu-red transition"><i class="fab fa-twitter"></i></a>
+    <section id="gallery" class="py-20 md:py-24 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-line font-oswald text-4xl md:text-5xl uppercase">Bộ hình mới về đội bóng</h2>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto">Ảnh được thay lại theo hướng usable hơn: sân vận động, biểu tượng CLB, ảnh lịch sử và các mốc có ý nghĩa trực tiếp với Manchester United.</p>
             </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                <button class="gallery-card panel rounded-3xl overflow-hidden text-left reveal" data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20Old%20Trafford.jpg" data-title="Old Trafford, ảnh chụp năm 2023">
+                    <div class="overflow-hidden"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20Old%20Trafford.jpg" alt="Old Trafford" class="w-full h-64 object-cover" /></div>
+                    <div class="p-5"><h3 class="font-oswald text-2xl uppercase mb-2">Old Trafford</h3><p class="text-gray-400">Khung sân nhà rõ, sạch và dễ dùng cho phần mở đầu.</p></div>
+                </button>
+
+                <button class="gallery-card panel rounded-3xl overflow-hidden text-left reveal" data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20Old%20Trafford%20(cropped).jpg" data-title="Old Trafford nhìn từ trên cao">
+                    <div class="overflow-hidden"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20Old%20Trafford%20(cropped).jpg" alt="Old Trafford aerial" class="w-full h-64 object-cover" /></div>
+                    <div class="p-5"><h3 class="font-oswald text-2xl uppercase mb-2">Toàn cảnh sân vận động</h3><p class="text-gray-400">Một góc nhìn trực quan hơn về Old Trafford.</p></div>
+                </button>
+
+                <button class="gallery-card panel rounded-3xl overflow-hidden text-left reveal" data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Munich_clock.jpg" data-title="Đài tưởng niệm Munich">
+                    <div class="overflow-hidden"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Munich_clock.jpg" alt="Munich memorial" class="w-full h-64 object-cover" /></div>
+                    <div class="p-5"><h3 class="font-oswald text-2xl uppercase mb-2">Thảm họa Munich</h3><p class="text-gray-400">Ảnh gắn trực tiếp với chương lịch sử đau thương của CLB.</p></div>
+                </button>
+
+                <button class="gallery-card panel rounded-3xl overflow-hidden text-left reveal" data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20FC%201957.jpg" data-title="Đội hình Manchester United năm 1957">
+                    <div class="overflow-hidden"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manchester%20United%20FC%201957.jpg" alt="Manchester United 1957" class="w-full h-64 object-cover" /></div>
+                    <div class="p-5"><h3 class="font-oswald text-2xl uppercase mb-2">Manchester United 1957</h3><p class="text-gray-400">Ảnh lịch sử phù hợp cho phần kể chuyện về Busby Babes.</p></div>
+                </button>
+
+                <button class="gallery-card panel rounded-3xl overflow-hidden text-left reveal" data-image="https://commons.wikimedia.org/wiki/Special:FilePath/United%20Trinity.jpg" data-title="United Trinity">
+                    <div class="overflow-hidden"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/United%20Trinity.jpg" alt="United Trinity" class="w-full h-64 object-cover" /></div>
+                    <div class="p-5"><h3 class="font-oswald text-2xl uppercase mb-2">United Trinity</h3><p class="text-gray-400">Biểu tượng gắn với George Best, Denis Law và Bobby Charlton.</p></div>
+                </button>
+
+                <button class="gallery-card panel rounded-3xl overflow-hidden text-left reveal" data-image="https://commons.wikimedia.org/wiki/Special:FilePath/1999%20UEFA%20Champions%20League%20celebration%20(edited).jpg" data-title="Ăn mừng chức vô địch Champions League 1999">
+                    <div class="overflow-hidden"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/1999%20UEFA%20Champions%20League%20celebration%20(edited).jpg" alt="Treble 1999" class="w-full h-64 object-cover" /></div>
+                    <div class="p-5"><h3 class="font-oswald text-2xl uppercase mb-2">Khoảnh khắc 1999</h3><p class="text-gray-400">Một hình ảnh giàu giá trị lịch sử hơn so với ảnh trang trí chung chung.</p></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-white/10 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Manchester United crest" class="w-16 h-16 mx-auto mb-5" />
+            <h2 class="font-oswald text-3xl uppercase tracking-[0.22em]">Manchester United</h2>
+            <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Bản chỉnh sửa này ưu tiên nội dung về đội bóng và thay lại bộ ảnh để dùng được hơn trong một landing page về lịch sử Manchester United.</p>
         </div>
     </footer>
 
+    <div id="lightbox" class="lightbox fixed inset-0 z-[100] bg-black/90 p-4 flex items-center justify-center">
+        <button id="closeLightbox" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 border border-white/10 text-white hover:bg-mured transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-5xl w-full">
+            <div class="panel rounded-3xl p-3 md:p-4">
+                <img id="lightboxImage" src="" alt="Preview" class="w-full max-h-[78vh] object-contain rounded-[20px] bg-[#111]" />
+                <div id="lightboxTitle" class="font-oswald text-2xl uppercase mt-4 px-1"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Navbar behavior
-        window.addEventListener('scroll', function() {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 80) {
-                nav.classList.add('py-2', 'bg-black');
-                nav.classList.remove('py-4', 'bg-black/80');
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 24) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
             } else {
-                nav.classList.remove('py-2', 'bg-black');
-                nav.classList.add('py-4', 'bg-black/80');
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
             }
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => observer.observe(el));
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const closeLightbox = document.getElementById('closeLightbox');
+
+        document.querySelectorAll('.gallery-card').forEach(card => {
+            card.addEventListener('click', () => {
+                lightboxImage.src = card.dataset.image;
+                lightboxTitle.textContent = card.dataset.title;
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeViewer = () => {
+            lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+        };
+
+        closeLightbox.addEventListener('click', closeViewer);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeViewer();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeViewer();
         });
     </script>
 </body>
